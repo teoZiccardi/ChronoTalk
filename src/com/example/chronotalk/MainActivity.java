@@ -4,10 +4,9 @@ package com.example.chronotalk;
 
 import java.util.Timer;
 
-import com.example.chronotalk.Util.Utils;
 import com.example.chronotalk.fragments.DetailFragment;
 import com.example.chronotalk.fragments.MainFragment;
-import com.example.chronotalk.Util.Utils;
+import com.example.chronotalk.voice.VoiceController;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,7 +16,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Chronometer;
+
 
 
 
@@ -62,7 +61,8 @@ public class MainActivity extends FragmentActivity {
 	
 	private Timer mTimer;
 	private boolean timerStarted;
-	private Chronometer chrono;
+	private VoiceController mVoiceController;
+	
 	
 
 
@@ -70,25 +70,36 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		
-		
-
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+		mVoiceController = new VoiceController(getApplicationContext());
+		
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		mTimer = new Timer();
 		timerStarted = false;
+		
+		
 
 	}
+	
+	
+	
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mVoiceController.onDestroy();				
+	}
 
-	
-	
+
+
+
+
 	public void start(View v)
 	{
 		if (mTimer == null)
