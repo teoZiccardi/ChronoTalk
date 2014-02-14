@@ -17,6 +17,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.widget.Chronometer;
 
 
 
@@ -25,7 +26,8 @@ public class MainActivity extends FragmentActivity {
 
 	private final static String TAG = "MainActivity";
 
-	private static final int numberOfSections = 2;
+	private static final int NUMBER_OF_SECTIONS = 2;
+	private static final int CHRONO_PRECISION = 10;
 
 	public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
@@ -48,7 +50,7 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {           
-			return numberOfSections;
+			return NUMBER_OF_SECTIONS;
 		}
 
 
@@ -60,6 +62,7 @@ public class MainActivity extends FragmentActivity {
 	
 	private Timer mTimer;
 	private boolean timerStarted;
+	private Chronometer chrono;
 	
 
 
@@ -67,6 +70,7 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
 		
 		
 
@@ -93,7 +97,7 @@ public class MainActivity extends FragmentActivity {
 		}
 		if (!timerStarted)
 		{
-			mTimer.schedule(new ChronoTask(this),0,10);
+			mTimer.schedule(new ChronoTask(this),0,CHRONO_PRECISION);
 			timerStarted = true;
 		}
 

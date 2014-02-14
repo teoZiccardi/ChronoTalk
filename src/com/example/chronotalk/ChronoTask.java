@@ -6,13 +6,16 @@ import android.app.Activity;
 
 
 public class ChronoTask extends TimerTask {
-	
+
 	private Activity mActivity;
 	private static int counter = 0;
-	
+	private int min,sec,cent;
+
+
+
 	public ChronoTask(Activity mact)
 	{
-	
+
 		this.mActivity = mact;
 	}
 
@@ -23,10 +26,16 @@ public class ChronoTask extends TimerTask {
 
 	private void timer() {
 
-		// TODO Timer logic
-		
+		// Timer logic
+
 		counter++;
-			
+
+		min = counter/6000;
+		sec = (counter%6000)/100;
+		cent = ((counter%100000)%1000)%100;
+
+
+
 		if (mActivity != null)
 		{
 			mActivity.runOnUiThread(Timer_Tick);
@@ -34,18 +43,18 @@ public class ChronoTask extends TimerTask {
 
 	}
 
-	
-	private Runnable Timer_Tick = new Runnable() {
+
+	private final Runnable Timer_Tick = new Runnable() {
 		public void run() {
-		
-			// TODO View Update Logic
+
+			// View Update Logic
 			if (mActivity != null)
 			{
-				((MainActivity)mActivity).timeUpdate(00, 00, counter);
+				((MainActivity)mActivity).timeUpdate(min, sec, cent);
 			}
-	
+
 		}
 	};
-	
-	
+
+
 }
