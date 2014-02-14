@@ -1,7 +1,7 @@
 package com.example.chronotalk.fragments;
 
 import com.example.chronotalk.R;
-
+import com.example.chronotalk.Util.Utils;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,27 +18,20 @@ public class MainFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.main_fragment, container, false);
-     
+		minute = (TextView) rootView.findViewById(R.id.minute);
+        seconds = (TextView) rootView.findViewById(R.id.seconds);
+        cents = (TextView) rootView.findViewById(R.id.cents);
+            
         return rootView;
 	}
-
-
-	@Override
-	public void onViewCreated(View view, Bundle savedInstanceState) {
-		super.onViewCreated(view, savedInstanceState);
-		minute = (TextView) view.findViewById(R.id.minute);
-        seconds = (TextView) view.findViewById(R.id.seconds);
-        cents = (TextView) view.findViewById(R.id.cents);
-	}
-	
 	
 
-
-	public void updateUi (int min,int sec,int cent)
+	public void updateUi (final int min,final int sec,final int cent)
 	{
-		minute.setText(min);
-		seconds.setText(sec);
-		cents.setText(cent);
+		
+		minute.setText(Utils.stringTime(min));
+		seconds.setText(Utils.stringTime(sec));
+		cents.setText(Utils.stringTime(cent));		
 	}
 	
 

@@ -4,8 +4,10 @@ package com.example.chronotalk;
 
 import java.util.Timer;
 
+import com.example.chronotalk.Util.Utils;
 import com.example.chronotalk.fragments.DetailFragment;
 import com.example.chronotalk.fragments.MainFragment;
+import com.example.chronotalk.Util.Utils;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -15,6 +17,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+
 
 
 
@@ -32,7 +35,6 @@ public class MainActivity extends FragmentActivity {
 
 		@Override
 		public Fragment getItem(int position) {
-			Log.d(TAG,"Called getItem");
 			switch (position)
 			{
 			case 0:
@@ -57,6 +59,7 @@ public class MainActivity extends FragmentActivity {
 	ViewPager mViewPager;
 	
 	private Timer mTimer;
+	private boolean timerStarted;
 	
 
 
@@ -76,6 +79,7 @@ public class MainActivity extends FragmentActivity {
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
 		mTimer = new Timer();
+		timerStarted = false;
 
 	}
 
@@ -83,11 +87,16 @@ public class MainActivity extends FragmentActivity {
 	
 	public void start(View v)
 	{
-		if (mTimer != null)
+		if (mTimer == null)
+		{
+			mTimer = new Timer();			
+		}
+		if (!timerStarted)
 		{
 			mTimer.schedule(new ChronoTask(this),0,10);
+			timerStarted = true;
 		}
-		
+
 	}
 
 	public void stop(View v)
@@ -96,17 +105,21 @@ public class MainActivity extends FragmentActivity {
 		{
 			mTimer.cancel();
 		}
+		mTimer = null;
+		timerStarted = false;
 	}
 	
-	public void timeUpdate(int min,int sec,int cent)
+	public void timeUpdate(final int min,final int sec,final int cent)
 	{
 		if (mViewPager.getCurrentItem() == 0)
 		{
-			((MainFragment)mSectionsPagerAdapter.getItem(0)).updateUi(min, sec, cent);
+			MainFragment temp = (MainFragment) getSupportFragmentManager().findFragmentByTag(
+		            "android:switcher:" + mViewPager.getId() + ":"
+		                    + mSectionsPagerAdapter.getItemId(0));
+			temp.updateUi(min, sec, cent);
 		}
 		
 	}
-
 
 
 }
