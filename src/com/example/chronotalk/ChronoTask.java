@@ -23,6 +23,11 @@ public class ChronoTask extends TimerTask {
 	public void run() {		
 		timer();		
 	}
+	
+	public static void resetChrono()
+	{
+		counter = 0;		
+	}
 
 	private void timer() {
 
@@ -33,8 +38,6 @@ public class ChronoTask extends TimerTask {
 		min = counter/6000;
 		sec = (counter%6000)/100;
 		cent = ((counter%100000)%1000)%100;
-
-
 
 		if (mActivity != null)
 		{

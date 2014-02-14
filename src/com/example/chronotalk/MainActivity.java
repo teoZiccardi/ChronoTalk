@@ -113,6 +113,15 @@ public class MainActivity extends FragmentActivity {
 		timerStarted = false;
 	}
 	
+	public void reset(View v)
+	{
+		ChronoTask.resetChrono();
+		timeUpdate(0, 0, 0);
+	}
+	
+	
+	
+	
 	public void timeUpdate(final int min,final int sec,final int cent)
 	{
 		if (mViewPager.getCurrentItem() == 0)
