@@ -111,12 +111,13 @@
         />
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/voiceImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
         android:layout_gravity="center"
         android:contentDescription="@string/speech_icon"
         android:src="@drawable/voice_recorder" />
+    
 
 </LinearLayout>

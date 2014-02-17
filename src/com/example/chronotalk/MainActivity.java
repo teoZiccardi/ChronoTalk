@@ -6,24 +6,22 @@ import java.util.Timer;
 
 import com.example.chronotalk.fragments.DetailFragment;
 import com.example.chronotalk.fragments.MainFragment;
-import com.example.chronotalk.voice.VoiceController;
+import com.example.chronotalk.voice.VoiceController.VoiceListener;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 
 
 
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends ButtonController implements VoiceListener{
 
-	private final static String TAG = "MainActivity";
+	//private final static String TAG = "MainActivity";
 
 	private static final int NUMBER_OF_SECTIONS = 2;
 	private static final int CHRONO_PRECISION = 10;
@@ -61,7 +59,8 @@ public class MainActivity extends FragmentActivity {
 	
 	private Timer mTimer;
 	private boolean timerStarted;
-	private VoiceController mVoiceController;
+	
+	
 	
 	
 
@@ -74,8 +73,8 @@ public class MainActivity extends FragmentActivity {
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
 		mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-		mVoiceController = new VoiceController(getApplicationContext());
-		
+		super.setVoiceListener(this);
+
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -92,12 +91,8 @@ public class MainActivity extends FragmentActivity {
 	
 	@Override
 	protected void onDestroy() {
-		super.onDestroy();
-		mVoiceController.onDestroy();				
+		super.onDestroy();				
 	}
-
-
-
 
 
 	public void start(View v)
@@ -144,6 +139,23 @@ public class MainActivity extends FragmentActivity {
 		}
 		
 	}
+
+
+
+
+	@Override
+	public void onDbChanged(float value) {
+		// TODO Auto-generated method stub
+		if (mViewPager.getCurrentItem() == 0)
+		{
+			MainFragment temp = (MainFragment) getSupportFragmentManager().findFragmentByTag(
+		            "android:switcher:" + mViewPager.getId() + ":"
+		                    + mSectionsPagerAdapter.getItemId(0));
+			temp.animateMicImage(value);
+		}
+		
+	}
+	
 
 
 }

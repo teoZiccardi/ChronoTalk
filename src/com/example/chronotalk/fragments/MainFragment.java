@@ -8,11 +8,13 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainFragment extends Fragment{
 	
 	private TextView minute,seconds,cents;
+	private ImageView mic;
 
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -21,6 +23,7 @@ public class MainFragment extends Fragment{
 		minute = (TextView) rootView.findViewById(R.id.minute);
         seconds = (TextView) rootView.findViewById(R.id.seconds);
         cents = (TextView) rootView.findViewById(R.id.cents);
+        mic = (ImageView)rootView.findViewById(R.id.voiceImage);
             
         return rootView;
 	}
@@ -32,6 +35,15 @@ public class MainFragment extends Fragment{
 		minute.setText(Utils.stringTime(min));
 		seconds.setText(Utils.stringTime(sec));
 		cents.setText(Utils.stringTime(cent));		
+		
+	}
+	
+	
+	public void animateMicImage (float value)
+	{
+		
+		// TODO
+		
 	}
 	
 
